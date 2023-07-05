@@ -1,5 +1,6 @@
 from random import randint
 import time
+import sqlite3
 
 right = 0
 
@@ -31,6 +32,10 @@ if mode == 'y':
     else:
         print("%s, maybe you should review your multiplication." %quiztaker)
 else:
+    records = sqlite3.connect("highscores.db")
+    cursor = records.cursor()
+    cursor.execute("CREATE TABLE IF NOT EXISTS scores (name TEXT, record INTEGER)")
+
     ready = input("Are you ready for Time Attack? (y/n)")
     if ready == 'y':
         print("Good Luck! ... ")
@@ -60,5 +65,14 @@ else:
              print("5 seconds left")
          elif elapsed_time > 10:
              print("Time Attack has concluded, you scored %d" %score)
-         else:
              break
+         else:
+             continue
+    print("Saving/Updating %s's score" %quiztaker)
+    try:
+        cursor.execute("INSERT INTO scores VALUES (?, ?)", (quiztaker,score))
+    except:
+        cursor.execute("UPDATE scores VALUES (?, ?)",(quiztaker, score))
+    records.commit()
+    print(cursor.fetchall())
+    cursor.close()
