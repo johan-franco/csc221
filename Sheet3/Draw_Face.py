@@ -1,8 +1,15 @@
 from gasp import *
 
-x =input("Insert x position of face")
-y = input("Insert y position of face")
-size = input("How big do you want the face?")
+# (300,250), 200 is what we used 
+#x =input("Insert x position of face")
+#y = input("Insert y position of face")
+#size = input("How big do you want the face?")
+
+x = 300
+y = 250
+size = 200
+
+
 
 face_cords = (int(x),int(y))
 face_rad = int(size)
@@ -33,6 +40,13 @@ Line(( x_nose_end + (1/10 * face_rad), y_bottom_nose), ((righteyex - eyesize - (
 
 #Mouth
 Arc((face_cords[0], arc_ypos), arc_rad, 230, 310)
- 
-update_when('key_pressed')      # you know what this does by now...
+
+#Eyebrows
+Arc((lefteyex,200), 150, 110,70)
+Arc((righteyex,200), 150, 110,70)
+
+#Ears
+Arc((face_cords[0]+size,300),50, -90,120)
+Arc((face_cords[0]-size,300),50, 270,60)
+update_when('key_pressed')     
 end_graphics()
