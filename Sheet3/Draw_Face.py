@@ -75,10 +75,13 @@ def face_maker(x , y, s):
         #torso 
         Line((face_cords[0], torso_start), (face_cords[0], torso_end))
 
-        #arm
+        #arms
         Line((face_cords[0], torso_start - size* 1/4), (face_cords[0]-size, torso_start - size*3/4))
         Line((face_cords[0],torso_start - size * 1/4 ), (face_cords[0]+size, torso_start - size*3/4 ))
 
+        #legs
+        Line((face_cords[0], torso_end), ( face_cords[0] - (size*3/4), torso_end-face_dam))
+        Line((face_cords[0], torso_end), ( face_cords[0] + (size*3/4), torso_end-face_dam))
     update_when('key_pressed')
     end_graphics()
 face_maker(x , y, size)
