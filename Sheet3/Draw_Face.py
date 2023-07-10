@@ -39,7 +39,7 @@ def face_maker(x , y, s):
     ear_y = (size * 5/4) + (face_cords[1]-face_rad)
     ears = size *1/4
 
-    brow_y = face_cords[1]*4/5 
+    brow_y = size*4/5 + (face_cords[1]-size)
     brow_s = size *3/4
 
     
@@ -71,8 +71,13 @@ def face_maker(x , y, s):
     if body == 'y':
         torso_start  = face_cords[1]-size
         torso_end = torso_start -face_dam
+
         #torso 
         Line((face_cords[0], torso_start), (face_cords[0], torso_end))
+
+        #arm
+        Line((face_cords[0], torso_start - size*1/4), (face_cords[0]-size, torso_start - size*1/2))
+
     update_when('key_pressed')
     end_graphics()
 face_maker(x , y, size)
