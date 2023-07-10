@@ -27,12 +27,22 @@ def face_maker(x , y, s):
 
     arc_ypos = face_cords[1]*6/5
     arc_rad  = face_rad
+    
+    if 150 <face_rad <250:
+        arc_ypos = face_cords[1]*6/5
+    elif 51 < face_rad < 150:
+        arc_ypos = face_cords[1]*11/10
+    else:
+        print("Oh no")
 
+    
     ear_y = (size * 5/4) + (face_cords[1]-face_rad)
     ears = size *1/4
 
     brow_y = face_cords[1]*4/5 
     brow_s = size *3/4
+
+    
 
     begin_graphics()
 
@@ -56,6 +66,13 @@ def face_maker(x , y, s):
     #Ears
     Arc((face_cords[0]+size,ear_y),ears, -90,120)
     Arc((face_cords[0]-size,ear_y),ears, 270,60)
-    update_when('key_pressed')     
+
+    body = input("Full body? (y/n)\n")
+    if body == 'y':
+        torso_start  = face_cords[1]-size
+        torso_end = torso_start -face_dam
+        #torso 
+        Line((face_cords[0], torso_start), (face_cords[0], torso_end))
+    update_when('key_pressed')
     end_graphics()
 face_maker(x , y, size)
