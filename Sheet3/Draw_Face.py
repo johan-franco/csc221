@@ -3,6 +3,9 @@ from gasp import *
 def moan():
     print("Python is useless \nAnd so are these worksheets")
 
+def mult(x):
+    result = x*x
+    print("%d * %d is %d" %(x,x,result))
 
 
 # (300,250), 200 is what we used 
@@ -57,3 +60,5 @@ update_when('key_pressed')
 end_graphics()
 
 moan()
+
+mult(3)
