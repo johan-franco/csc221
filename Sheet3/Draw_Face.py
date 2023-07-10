@@ -69,6 +69,7 @@ def face_maker(x , y, s):
     Arc((face_cords[0]+size,ear_y),ears, -90,120)
     Arc((face_cords[0]-size,ear_y),ears, 270,60)
 
+    #body
     body = input("Full body? (y/n)\n")
     if body == 'y':
         torso_start  = face_cords[1]-size
@@ -84,6 +85,12 @@ def face_maker(x , y, s):
         #legs
         Line((face_cords[0], torso_end), ( face_cords[0] - (size*3/4), torso_end-face_dam))
         Line((face_cords[0], torso_end), ( face_cords[0] + (size*3/4), torso_end-face_dam))
+    
+    #Hat
+    hat = input("Hat?(y/n) \n")
+    if hat == 'y':
+        pass
+
     update_when('key_pressed')
     end_graphics()
 face_maker(x , y, size)
