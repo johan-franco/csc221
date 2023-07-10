@@ -6,8 +6,8 @@ from gasp import *
 #size = input("How big do you want the face?")
 
 x = 300
-y = 250
-size = 200
+y = 400
+size = 100
 
 
 def face_maker(x , y, s):
@@ -76,7 +76,8 @@ def face_maker(x , y, s):
         Line((face_cords[0], torso_start), (face_cords[0], torso_end))
 
         #arm
-        Line((face_cords[0], torso_start - size*1/4), (face_cords[0]-size, torso_start - size*1/2))
+        Line((face_cords[0], torso_start - size* 1/4), (face_cords[0]-size, torso_start - size*3/4))
+        Line((face_cords[0],torso_start - size * 1/4 ), (face_cords[0]+size, torso_start - size*3/4 ))
 
     update_when('key_pressed')
     end_graphics()
