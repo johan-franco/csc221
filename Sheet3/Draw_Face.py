@@ -6,7 +6,7 @@ from gasp import *
 #size = input("How big do you want the face?")
 
 x = 300
-y = 400
+y = 200
 size = 70
 
 
@@ -32,8 +32,10 @@ def face_maker(x , y, s):
         arc_ypos = face_cords[1]*6/5
     elif 99 < face_rad < 150:
         arc_ypos = face_cords[1]*11/10
-    elif 49<face_rad <99:
-        arc_ypos = face_cords[1]*21/20
+    elif 80<face_rad <99:
+        arc_ypos = face_cords[1]*13/12
+    elif 50 <face_rad<80:
+        arc_ypos = face_cords[1]*11/10
     else:
         print("Oh no")
 
@@ -89,7 +91,17 @@ def face_maker(x , y, s):
     #Hat
     hat = input("Hat?(y/n) \n")
     if hat == 'y':
-        pass
+        hat_leftx = face_cords[0] - face_rad/2
+        hat_rightx = face_cords[0] + face_rad/2
+
+        hat_basey = face_cords[1] + face_rad
+        hat_tip = hat_basey + face_dam/2
+        hatsize = size *1/8
+
+        Line((hat_leftx, hat_basey ), (hat_rightx , hat_basey))
+        Line((hat_leftx, hat_basey), (face_cords[0], hat_tip))
+        Line((hat_rightx, hat_basey), ( face_cords[0], hat_tip))
+        Circle((face_cords[0] , hat_tip+hatsize), hatsize)
 
     update_when('key_pressed')
     end_graphics()
