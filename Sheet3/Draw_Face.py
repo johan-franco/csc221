@@ -7,7 +7,7 @@ from gasp import *
 
 x = 300
 y = 400
-size = 100
+size = 70
 
 
 def face_maker(x , y, s):
@@ -30,8 +30,10 @@ def face_maker(x , y, s):
     
     if 150 <face_rad <250:
         arc_ypos = face_cords[1]*6/5
-    elif 51 < face_rad < 150:
+    elif 99 < face_rad < 150:
         arc_ypos = face_cords[1]*11/10
+    elif 49<face_rad <99:
+        arc_ypos = face_cords[1]*21/20
     else:
         print("Oh no")
 
