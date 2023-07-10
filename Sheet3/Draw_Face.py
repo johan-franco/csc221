@@ -1,5 +1,10 @@
 from gasp import *
 
+def moan():
+    print("Python is useless \nAnd so are these worksheets")
+
+
+
 # (300,250), 200 is what we used 
 #x =input("Insert x position of face")
 #y = input("Insert y position of face")
@@ -50,3 +55,5 @@ Arc((face_cords[0]+size,300),50, -90,120)
 Arc((face_cords[0]-size,300),50, 270,60)
 update_when('key_pressed')     
 end_graphics()
+
+moan()
