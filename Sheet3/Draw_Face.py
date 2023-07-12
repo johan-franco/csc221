@@ -11,7 +11,7 @@ size = int(input("How big do you want the face?\n"))
 
 
 def face_maker(x , y, s):
-    face_cords = (int(x),int(y))
+    face_cords = (int(x), int(y))
     face_rad = int(size)
     face_dam = int(size) * 2
 
@@ -48,10 +48,10 @@ def face_maker(x , y, s):
 
     #Eyes
     Circle((lefteyex, eye_ypos), eyesize)
-    Circle((righteyex,eye_ypos),eyesize)
+    Circle((righteyex,eye_ypos), eyesize)
 
     #Nose
-    Line((face_cords[0],eye_ypos), (x_nose_end + (1/10 * face_rad), y_bottom_nose))
+    Line((face_cords[0], eye_ypos), (x_nose_end + (1/10 * face_rad), y_bottom_nose))
     Line(( x_nose_end + (1/10 * face_rad), y_bottom_nose), ((righteyex - eyesize - (1/10 *face_rad)), y_bottom_nose))
 
     #Mouth
@@ -59,11 +59,11 @@ def face_maker(x , y, s):
 
     #Eyebrows
     Arc((lefteyex, brow_y), brow_s, 110,70)
-    Arc((righteyex,brow_y), brow_s, 110,70)
+    Arc((righteyex, brow_y), brow_s, 110,70)
 
     #Ears
-    Arc((face_cords[0]+size,ear_y),ears, -90,120)
-    Arc((face_cords[0]-size,ear_y),ears, 270,60)
+    Arc((face_cords[0]+size, ear_y),ears, -90,120)
+    Arc((face_cords[0]-size, ear_y),ears, 270,60)
 
     #body
     body = input("Full body? (y/n)\n")
@@ -76,7 +76,7 @@ def face_maker(x , y, s):
 
         #arms
         Line((face_cords[0], torso_start - size* 1/4), (face_cords[0]-size, torso_start - size*3/4))
-        Line((face_cords[0],torso_start - size * 1/4 ), (face_cords[0]+size, torso_start - size*3/4 ))
+        Line((face_cords[0], torso_start - size* 1/4), (face_cords[0]+size, torso_start - size*3/4 ))
 
         #legs
         Line((face_cords[0], torso_end), ( face_cords[0] - (size*3/4), torso_end-face_dam))
@@ -92,10 +92,10 @@ def face_maker(x , y, s):
         hat_tip = hat_basey + face_dam/2
         hatsize = size *1/8
 
-        Line((hat_leftx, hat_basey ), (hat_rightx , hat_basey))
+        Line((hat_leftx, hat_basey), (hat_rightx, hat_basey))
         Line((hat_leftx, hat_basey), (face_cords[0], hat_tip))
         Line((hat_rightx, hat_basey), ( face_cords[0], hat_tip))
-        Circle((face_cords[0] , hat_tip+hatsize), hatsize)
+        Circle((face_cords[0], hat_tip+hatsize), hatsize)
 
     update_when('key_pressed')
     end_graphics()
