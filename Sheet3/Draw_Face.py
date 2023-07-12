@@ -1,13 +1,13 @@
 from gasp import *
 
 # (300,250), 200 is what we used 
-#x =input("Insert x position of face")
-#y = input("Insert y position of face")
-#size = input("How big do you want the face?")
+x =int(input("Insert x position of face:\n"))
+y = int(input("Insert y position of face:\n"))
+size = int(input("How big do you want the face?\n"))
 
-x = 300
-y = 200
-size = 70
+#x = 300 
+#y = 200
+#size = 300
 
 
 def face_maker(x , y, s):
@@ -25,16 +25,12 @@ def face_maker(x , y, s):
     x_nose_end = eyesize + lefteyex 
     y_bottom_nose = (face_cords[1] - face_rad) + (face_rad*(3/4))
 
-    arc_ypos = face_cords[1]*6/5
+    arc_ypos = face_cords[1]*11/10
     arc_rad  = face_rad
     
     if 150 <face_rad <250:
         arc_ypos = face_cords[1]*6/5
-    elif 99 < face_rad < 150:
-        arc_ypos = face_cords[1]*11/10
-    elif 80<face_rad <99:
-        arc_ypos = face_cords[1]*13/12
-    elif 50 <face_rad<80:
+    elif 50 < face_rad < 150:
         arc_ypos = face_cords[1]*11/10
     else:
         print("Oh no")
