@@ -25,15 +25,13 @@ def face_maker(x , y, s):
     x_nose_end = eyesize + lefteyex 
     y_bottom_nose = (face_cords[1] - face_rad) + (face_rad*(3/4))
 
-    arc_ypos = face_cords[1]*11/10
+    arc_ypos = face_cords[1]*6/5
     arc_rad  = face_rad
     
-    if 150 <face_rad <250:
-        arc_ypos = face_cords[1]*6/5
-    elif 50 < face_rad < 150:
+    if 0 < face_rad < 150:
         arc_ypos = face_cords[1]*11/10
     else:
-        print("Oh no")
+        pass
 
     
     ear_y = (size * 5/4) + (face_cords[1]-face_rad)
