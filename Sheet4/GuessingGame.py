@@ -21,8 +21,11 @@ def adjust_settings(x,y):
     y = read_number("What maximum range do you want to play the guessing game from? ")
     return (x, y)
 
+wins = 0
+total_games = 0
 number_guesses = 0
 ListNumberGuesses = []
+
 min_range = read_number("What minimum range do you want to play the guessing game from? ")
 max_range = read_number("What maximum range do you want to play the guessing game from? ")
 limit_guesses = read_yesorno("""Would you like to limit the amount of guesses you can make?
@@ -44,8 +47,13 @@ while True:
     if guess == randnum or number_guesses == limiter:
         if guess == randnum:
             ListNumberGuesses.append(number_guesses)
-            print("Congrats you guessed my number! \nIt took you %d guesses." %number_guesses)
+            total_games +=1
+            wins +=1
+            winrate = (wins/total_games)*100
+            avguess = sum(ListNumberGuesses)/len(ListNumberGuesses)
+            print("Congrats you guessed my number! \nIt took you %d guesses.\nIn total you have played %d times, your total average guesses to the correct answer is %d and your winrate is %d% " %(number_guesses, total_games,avguess, winrate ))
         else:
+            total_games +=1
             print("You took %d guesses and went over the limiter!" %limiter)
         new_game = read_yesorno("Would you like to play again? ")
         if new_game == True:
@@ -55,7 +63,6 @@ while True:
         else:
             print("OK. Bye!")
             break
-
 
     elif guess < randnum:
         print("My number is higher than %d" %guess)
