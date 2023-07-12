@@ -1,9 +1,16 @@
 from random import *
+from gasp.utils import *
 
 i = 0
-randnum = randint(1,1000)
+min_range = read_number("What minimum range do you want to play the guessing game from?")
+print(type(min_range))
 
-print("A number between 1 and 1000 has been chosen.")
+max_range = read_number("What maximum range do you want to play the guessing game from?")
+print(type(max_range))
+
+randnum = randint(min_range,max_range)
+
+print("A number between %d and %d has been chosen." %(min_range, max_range))
 while True:
     try:
         guess = int(input("Enter your guess: "))
@@ -23,14 +30,14 @@ while True:
     if i == 4:
         new_game = input("You took four guesses would you like to play again? (y/n)\n")
     
-    if new_game == 'y':
-        print("Choosing new number")
-        randnum = randint(1, 1000)
-        i = 0
-        continue
-    else:
-        print("OK. Bye!")
-        break
+        if new_game == 'y':
+            print("Choosing new number")
+            randnum = randint(1, 1000)
+            i = 0
+            continue
+        else:
+            print("OK. Bye!")
+            break
 
 
 
