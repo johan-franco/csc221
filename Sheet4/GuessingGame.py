@@ -2,15 +2,51 @@ from random import *
 from gasp.utils import *
 import getpass
 
-def new_game():
+def twoplayer(h, s, pinfo, ent_num, mod):
+    h = 1 - h
+    s = 1 - s
+    pname = input("Enter player 1's name: ")
+    pname2 = input("Enter player 2's name: ")
+    player1_guesser = 0
+    player2_guesser = 0
+    p1_games = 0
+    p2_games = 0
+    mod = 1
+    playerlist = [pname, pname2]
+    pinfo = [[pname, player1_guesser, p1_games], [pname2, player2_guesser, p2_games]]
+    ent_num = -1000000000
+    while ent_num > max_range or ent_num < min_range:
+        ent_num = int(getpass.getpass("%s enter your secret number:" %playerlist[h]))
+        print(ent_num)
+    return h,s, pinfo, ent_num, mod
+
+def new_game(randnum, number_guesses):
     new_game = read_yesorno("Would you like to play again? ")
     if new_game == True:
         print("Choosing new number")
         randnum = randint(min_range, max_range)
         number_guesses = 0
+        return randnum & number_guesses
     else:
         print("OK. Bye!")
         exit()
+
+def new_game2(ent_num, number_guesses, mod, s, pinfo, h):
+    new_game = read_yesorno("Would you like to play again? ")
+    print(mod)
+    if new_game == True:
+        number_guesses = 0
+        h = 1 - h
+        s = 1 - s
+        ent_num = -10000
+        while ent_num > max_range or ent_num < min_range:
+            ent_num = int(getpass.getpass("%s enter your secret number:" % pinfo[s][0]))
+            print(ent_num)
+        return ent_num, number_guesses, s,h
+    else:
+        print("OK. Bye!")
+        exit()
+    
 def adjust_settings(x,y):
     changer = read_yesorno("Would you like to change any settings? ")
     if changer == True :
@@ -29,22 +65,6 @@ def adjust_settings(x,y):
     
     return (x, y)
 
-def twoplayer(s, pinfo):
-    s = 0
-    pname = input("Enter player 1's name: ")
-    pname2 = input("Enter player 2's name: ")
-    player1_guesser = 0
-    player2_guesser = 0
-    p1_games = 0
-    p2_games = 0
-    playerlist = [pname, pname2]
-    pinfo = [[pname, player1_guesser, p1_games], [pname2, player2_guesser, p2_games]]
-    entered_num = -1000000000
-    while entered_num > max_range or entered_num < min_range:
-        entered_num = int(getpass.getpass("%s enter your secret number:" %playerlist[s]))
-        print(entered_num)
-    s = 1 - s
-    return s & pinfo & entered_num
 
 
 
@@ -67,22 +87,31 @@ twoplay = read_yesorno("Would you like to play with 2 players (1v1)")
 
 if twoplay == True:
     swap  = 0
+    seeker = 1
     playerinfo = 0
     secret_num = 0
-    twoplayer(swap, playerinfo, secret_num )
-    guessernam= playerinfo[swap][0]
+    mode = 0
+    swap, seeker,playerinfo, secret_num, mode = twoplayer(swap, seeker, playerinfo, secret_num, mode)
+    print(mode)
+    hider_name= playerinfo[swap][0] + "'s"
 else:
-    randnum = randint(min_range,max_range)
+    mode = 0
+    hider_name = 'My'
+    secret_num = randint(min_range,max_range)
 
 print("A number between %d and %d has been chosen." %(min_range, max_range))
 
 while True:
-    guess = read_number("Enter your guess: ")
+    guess = read_number("%s,enter your guess: " %hider_name)
     number_guesses += 1
 
-    if guess == randnum or guess == secret_num:
+    if  guess == secret_num:
         if twoplay == True:
-            print("It took you %d guesses to guess %s's secret number, your total average guesses is %d" %(number_guesses, playerinfo[swap][0], ))
+            playerinfo[seeker][1]= playerinfo[seeker][1] + number_guesses
+            playerinfo[seeker][2] +=1
+            cur_seeker_avg = playerinfo[seeker][1]/playerinfo[seeker][2]
+            print("It took you %d guesses to guess %s's secret number, your total average guesses is %d" %(number_guesses, playerinfo[swap][0],cur_seeker_avg ))
+            secret_num, number_guesses, swap, seeker = new_game2(secret_num ,number_guesses,mode, swap, playerinfo, seeker)
         else:
             ListNumberGuesses.append(number_guesses)
             total_games +=1
@@ -90,16 +119,15 @@ while True:
             winrate = (wins/total_games)*100
             avguess = sum(ListNumberGuesses)/len(ListNumberGuesses)
             print("Congrats you guessed my number! \nIt took you %d guesses.\nIn total you have played %d times, your total average guesses to the correct answer is %d and your winrate is %d% " %(number_guesses, total_games,avguess, winrate ))
-        new_game()
+        
     elif number_guesses == limiter:
         total_games +=1
         print("You took %d guesses and went over the limiter!" %limiter)
-        new_game()
-
-    elif guess < randnum:
-        print("My number is higher than %d" %guess)
-    elif guess > randnum:
-        print("Your number, %d, is higher than mine" %guess) 
+        new_game(secret_num ,number_guesses,mode, swap, playerinfo)
+    elif guess < secret_num:
+        print("%s number is higher than %d" %(hider_name, guess))
+    elif guess > secret_num:
+        print("%s number, is lower than %d" %(hider_name,guess))
     
 
 
