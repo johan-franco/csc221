@@ -40,12 +40,42 @@ def new_game2(ent_num, number_guesses, mod, s, pinfo, h):
         s = 1 - s
         ent_num = -10000
         while ent_num > max_range or ent_num < min_range:
-            ent_num = int(getpass.getpass("%s enter your secret number:" % pinfo[s][0]))
+            ent_num = int(getpass.getpass("%s enter your secret number: " % pinfo[s][0]))
             print(ent_num)
         return ent_num, number_guesses, s,h
     else:
         print("OK. Bye!")
         exit()
+
+def against_comp(lmin, lmax):
+    comp_guess = -1000
+    range = lmax - lmin
+    while True:
+        new_min = lmin 
+        new_max = lmax + range/100 # to let it guess the max num
+        comp_num = 0
+        ent_num  = int(getpass.getpass("Enter your secret number that you want the computer to search for: " ))
+        while comp_guess != ent_num:
+            middle = round((new_max - new_min)/2)
+            comp_guess= new_min + middle
+            comp_num += 1
+            if comp_guess < ent_num:
+                print("Computer's guess is %d, it was lower than your number." %(comp_guess))
+                new_min = comp_guess
+            elif comp_guess > ent_num:
+                print("Computer's guess is %d, it was higher than your number" %(comp_guess))
+                new_max = comp_guess
+
+        print("Computer guessed %d, which is your number and it took %d tries." %(comp_guess,comp_num))
+        again = read_yesorno("Play again against computer? ")
+        if again == True:
+            print("Starting...")
+            continue
+        else:
+            print("Okay! Bye!")
+            exit()
+        
+
     
 def adjust_settings(x,y):
     changer = read_yesorno("Would you like to change any settings? ")
@@ -66,8 +96,6 @@ def adjust_settings(x,y):
     return (x, y)
 
 
-
-
 wins = 0
 total_games = 0
 number_guesses = 0
@@ -82,6 +110,10 @@ if limit_guesses == True:
     limiter = read_number("What limit of guesses do you want? ")
 else:
     limiter = -1
+
+computer = read_yesorno("Would you like to play with you hiding the number and the computer trying to find it?")
+if computer == True:
+    against_comp(min_range,max_range)
 
 twoplay = read_yesorno("Would you like to play with 2 players (1v1)")
 
