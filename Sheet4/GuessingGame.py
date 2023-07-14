@@ -30,7 +30,7 @@ def new_game(randnum, number_guesses):
     else:
         print("OK. Bye!")
         exit()
-
+#To let 2 players to play again
 def new_game2(ent_num, number_guesses, mod, s, pinfo, h):
     new_game = read_yesorno("Would you like to play again? ")
     print(mod)
@@ -76,7 +76,7 @@ def against_comp(lmin, lmax):
             exit()
         
 
-    
+#work in progress
 def adjust_settings(x,y):
     changer = read_yesorno("Would you like to change any settings? ")
     if changer == True :
@@ -95,7 +95,7 @@ def adjust_settings(x,y):
     
     return (x, y)
 
-
+#For average guesses and winrate (only applicable when limiting guesses)
 wins = 0
 total_games = 0
 number_guesses = 0
@@ -109,6 +109,7 @@ Note that enabling this in second player will make winner be chosen by whoever i
 if limit_guesses == True:
     limiter = read_number("What limit of guesses do you want? ")
 else:
+    #to avoid limiter stopping while loop
     limiter = -1
 
 computer = read_yesorno("Would you like to play with you hiding the number and the computer trying to find it?")
@@ -118,6 +119,7 @@ if computer == True:
 twoplay = read_yesorno("Would you like to play with 2 players (1v1)")
 
 if twoplay == True:
+    #to swap players each round and log data of each player
     swap  = 0
     seeker = 1
     playerinfo = 0
@@ -126,6 +128,7 @@ if twoplay == True:
     swap, seeker,playerinfo, secret_num, mode = twoplayer(swap, seeker, playerinfo, secret_num, mode)
     print(mode)
     hider_name= playerinfo[swap][0] + "'s"
+    
 else:
     mode = 0
     hider_name = 'My'
@@ -144,6 +147,7 @@ while True:
             cur_seeker_avg = playerinfo[seeker][1]/playerinfo[seeker][2]
             print("It took you %d guesses to guess %s's secret number, your total average guesses is %d" %(number_guesses, playerinfo[swap][0],cur_seeker_avg ))
             secret_num, number_guesses, swap, seeker = new_game2(secret_num ,number_guesses,mode, swap, playerinfo, seeker)
+
         else:
             ListNumberGuesses.append(number_guesses)
             total_games +=1
@@ -156,8 +160,10 @@ while True:
         total_games +=1
         print("You took %d guesses and went over the limiter!" %limiter)
         new_game(secret_num ,number_guesses,mode, swap, playerinfo)
+
     elif guess < secret_num:
         print("%s number is higher than %d" %(hider_name, guess))
+
     elif guess > secret_num:
         print("%s number, is lower than %d" %(hider_name,guess))
     
