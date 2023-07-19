@@ -1,10 +1,10 @@
 from gasp import *
-from pygame import *
+
 from random import *
 from gasp.utils import *
 
 def place_player( ):
-    global player_shape , px, py
+    global player_shape, px, py
     px = randint(0,63)
     py = randint(0,47)
 
@@ -18,8 +18,8 @@ def place_robot():
     ry = randint(0,47)
     roboshape = Box((10 * rx, 10 * ry), 10, 10, filled=False, color=color.BLACK, thickness=1)
 
-def move_player():
-    direction =  read_number(update_when('key_pressed'))
+def move_player(px, py):
+    direction =  (update_when('key_pressed'))
     
     #move up & left
     if direction == '1':
@@ -52,58 +52,67 @@ def move_player():
     elif direction == '9':
         px += 1
         py -= 1
-
+    sleep(.5)
     move_to(player_shape, (10 * px + 5, 10 * py + 5))
+    return px, py
 
-def move_robot():
+def move_robot(rx,ry):
     #Robot moves left & down
-    if rx > px & ry > py:
+    if rx > px and ry > py:
         rx -= 1
         ry -= 1
+        print("left & down")
     #Robot moves right & up
-    elif rx < px & ry < py:
+    elif rx < px and ry < py:
         rx += 1
         ry += 1
+        print("right & up")
     #Robot moves left & up
-    elif rx > px & ry < py:
+    elif rx > px and ry < py:
         rx -= 1
         ry += 1
+        print("left & up")
     #Robot moves right  & down
-    elif rx < px & ry > py:
+    elif rx < px and ry > py:
         rx += 1
         ry -= 1
+        print("right & down")
     #Robot moves left
-    elif rx > px & ry == py:
+    elif rx > px and ry == py:
         rx -= 1
+        print("left")
     #Robot moves right
-    elif rx < px & ry == py:
+    elif rx < px and ry == py:
         rx += 1
+        print("right")
     #Robot moves down
-    elif ry > py & rx == px:
+    elif ry > py and rx == px:
         ry -= 1
+        print("down")
     #Robot moves up
-    elif ry < py & rx == px:
+    elif ry < py and rx == px:
         ry += 1
-    sleep(1)
-    move_to(roboshape, (10 * px, 10 * py))
-    sleep(10)
+        print("up")
+    sleep(.5)
+    move_to(roboshape, (10 * rx, 10 * ry))
+    return rx, ry
 
 def check_collsions():
-    if ry == py & rx == px:
-        pass
+    if ry == py and rx == px:
+        print("You've been caught!")
+        return True
 
 
 begin_graphics()
 
-finished = False
-
 place_player()
 place_robot()
-move_player()
-move_robot()
-
-while not finished:
-    move_player()
+while True:
+    px, py = move_player(px,py)
+    rx, ry = move_robot(rx, ry)
+    collided = check_collsions()
+    if collided == True:
+        break
 
 end_graphics()
 
