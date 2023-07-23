@@ -1,14 +1,11 @@
 from gasp import *
-
 from random import *
 from gasp.utils import *
 
 def place_player( ):
-    global player_shape, px, py
+    global px, py
     px = randint(0,63)
     py = randint(0,47)
-
-    player_shape = Circle((10 * px + 5, 10 * py + 5), 5, filled=True)
 
     print("Here I am!")
 
@@ -22,6 +19,11 @@ def move_player(px, py):
     direction =  (update_when('key_pressed'))
     
     #move up & left
+    while direction == '5':
+        remove_from_screen(player_shape)
+        safely_place()
+        direction = update_when('key_pressed')
+
     if direction == '1':
         px -= 1
         py += 1
@@ -35,9 +37,6 @@ def move_player(px, py):
     #move left
     elif direction == '4':
         px -= 1
-    #stay still
-    elif direction == '5':
-        pass
     #move right
     elif direction == '6':
         px += 1
@@ -99,15 +98,28 @@ def move_robot(rx,ry):
 
 def check_collsions():
     if ry == py and rx == px:
-        print("You've been caught!")
+        Text("You've been caught!")
+        sleep(3)
+        return True
+    
+def collided():
+    if ry == py and rx == px:
+
         return True
 
+def safely_place(): 
+    global player_shape
+    place_player()
+    while collided():
+        place_player()
+    player_shape = Circle((10 * px + 5, 10 * py + 5), 5, filled=True)
 
 begin_graphics()
 
-place_player()
 place_robot()
+safely_place()
 while True:
+    #nonetype error occuring
     px, py = move_player(px,py)
     rx, ry = move_robot(rx, ry)
     collided = check_collsions()
