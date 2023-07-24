@@ -98,7 +98,7 @@ def move_robot(rx,ry):
 
 def check_collsions():
     if ry == py and rx == px:
-        Text("You've been caught!")
+        Text("You've been caught!", (320,240), color = color.RED, size = 40)
         sleep(3)
         return True
     
@@ -119,11 +119,11 @@ begin_graphics()
 place_robot()
 safely_place()
 while True:
-    #nonetype error occuring
+    #Bug where we in
     px, py = move_player(px,py)
     rx, ry = move_robot(rx, ry)
-    collided = check_collsions()
-    if collided == True:
+    death = check_collsions()
+    if death == True:
         break
 
 end_graphics()
