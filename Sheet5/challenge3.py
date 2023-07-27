@@ -12,3 +12,10 @@ while x < 635:
     move_to(c, (x, y))
     sleep(.04)
     
+n = 0
+while n < 22:
+    if n % 2 == 0:
+        n += 3
+    else:
+        n += 5
+print(n)
