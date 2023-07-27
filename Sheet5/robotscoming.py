@@ -71,8 +71,8 @@ def move_player():
     return player.x, player.y
 
 def move_robots(list_of_bots):
+    botCount = 0 
     for bot in list_of_bots:
-        botCount = 0 
         #Robot moves left & down
         if bot.x > player.x and bot.y > player.y:
             bot.x -= 1
@@ -115,11 +115,39 @@ def move_robots(list_of_bots):
         botCount += 1
     return list_of_bots
 
-def check_collsions():
-    if robots.y == player.y and robots.x == player.x:
-        Text("You've been caught!", (320,240), color = color.RED, size = 40)
+def check_collisions():
+    global finished,roblist, junk
+    surviving_robots = []
+    for robot in roblist:
+        if collided(robot, junk):
+            continue
+        jbot = robot_crashed(robot)
+        if jbot == False:
+            surviving_robots.append(robot)
+        else: 
+            print("CRASH\n\n")
+            remove_from_screen(jbot.shape)
+            jbot.shape = Box((10*jbot.x, 10*jbot.y), 10, 10, filled=True)
+            junk.append(jbot)
+    roblist = []
+    surviving_after_junk = []
+    for robot in surviving_robots:
+        if not collided(robot, junk):
+            surviving_after_junk.append(robot)
+
+    roblist = surviving_after_junk
+    if len(roblist) == 0:
+        finished = True
+        Text("You have won! Congrats!", (120, 240), size=36)
         sleep(3)
-        return True
+        return
+
+    # Handle player crashes into robot
+    if collided(player, roblist+junk):
+        finished = True
+        Text("You've been caught!", (120, 240), size=36)
+        sleep(3)
+        return
     
 def collided(object, list_of_bots):
     for item in list_of_bots:
@@ -135,19 +163,23 @@ def safely_place():
     player.shape = Circle((10 * player.x + 5, 10 * player.y + 5), 5, filled=True)
 
 def robot_crashed(the_bot):
-    for a_bot in robots:
-        if a_bot.x == the_bot.x and a_bot.y == the_bot.y and the_bot.x != a_bot.x and the_bot.y != a_bot.y:  
+    for a_bot in roblist:
+        if a_bot.x == the_bot.x and a_bot.y == the_bot.y and the_bot != a_bot:  
             return a_bot
     return False
+
+
     
 begin_graphics()
-numbots = 10
+numbots = 100
+junk = []
 place_robots()
 safely_place()
+
 while True:
     player.x, player.y = move_player()
     roblist = move_robots(roblist)
-    death = check_collsions()
+    death = check_collisions()
     if death == True:
         break
 
